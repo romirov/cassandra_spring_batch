@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: CassandraSpringBatch
+  cassandra:
+    schema-action: CREATE_IF_NOT_EXISTS
+    request:
+      timeout: 10s
+    connection:
+      init-query-timeout: 10s
+      connect-timeout: 10s
+    keyspace-name: ${CASSANDRA_KEYSPACE:cassandraspringbatch}
+    local-datacenter: ${CASSANDRA_LOCAL_DATACENTER:datacenter1}
+    contact-points: ${CASSANDRA_CONTACT_POINT:127.0.0.1}/
+    port: 9042
+    username: ${CASSANDRA_USERNAME:cassandra}
+    password: ${CASSANDRA_PASSWORD:cassandra}
+
