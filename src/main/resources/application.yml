@@ -8,10 +8,9 @@ spring:
     connection:
       init-query-timeout: 10s
       connect-timeout: 10s
-    keyspace-name: ${CASSANDRA_KEYSPACE:cassandraspringbatch}
+    keyspace-name: ${CASSANDRA_KEYSPACE:my_keyspace}
     local-datacenter: ${CASSANDRA_LOCAL_DATACENTER:datacenter1}
-    contact-points: ${CASSANDRA_CONTACT_POINT:127.0.0.1}/
+    contact-points: ${CASSANDRA_CONTACT_POINT:127.0.0.1}
     port: 9042
     username: ${CASSANDRA_USERNAME:cassandra}
     password: ${CASSANDRA_PASSWORD:cassandra}
-

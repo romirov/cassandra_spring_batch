@@ -15,6 +15,7 @@ dependencies {
 	testImplementation("org.testcontainers:cassandra")
 	testImplementation("org.testcontainers:junit-jupiter")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+	testImplementation("com.ocadotechnology.gembus:test-arranger:1.6.4")
 }
 
 java {
