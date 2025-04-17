@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository
 import java.util.*
 
 @Repository
-interface CompanyRepository: CrudRepository<Company, UUID>
+interface CompanyRepository: CrudRepository<Company, UUID>{
+
+}

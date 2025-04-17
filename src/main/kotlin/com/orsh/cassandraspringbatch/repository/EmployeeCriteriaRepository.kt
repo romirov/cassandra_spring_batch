@@ -22,4 +22,8 @@ class EmployeeCriteriaRepository {
 		val query = Query.query(criteria)
 		return template.selectOne(query, Employee::class.java)
 	}
+
+//	fun insert(employee: Employee): Employee {
+//			template.cqlOperations.execute("insert into my_keyspace.company (id, name, address) values (?, ?, ?)", company.id, company.name, company.address.value)
+//	}
 }

@@ -1,32 +1,46 @@
-//package com.orsh.cassandraspringbatch.repository
-//
-//import com.datastax.driver.core.utils.UUIDs
-//import com.ocadotechnology.gembus.test.Arranger.some
-//import com.orsh.cassandraspringbatch.abstractions.AbstractCassandraTest
-//import com.orsh.cassandraspringbatch.entity.Company
-//import org.junit.jupiter.api.Test
-//import org.springframework.beans.factory.annotation.Autowired
-//import kotlin.test.assertEquals
-//
-//
-//class CompanyRepositoryTest: AbstractCassandraTest() {
-//	@Autowired
-//	lateinit var companyRepository: CompanyRepository
-//
-//	@Test
-//	fun saveTest() {
-////		val companyId = UUIDs.timeBased()
-////		val company = some(Company::class.java).copy(id = companyId)
-//////		companyRepository.save(company)
-////		template.insert<Company>(company)
-////		template.exists(company.id, Company::class.java)
-//////		val savedCompany = companyRepository.findById(companyId).get()
-//////		assertEquals(company, savedCompany)
-//		val companyId = UUIDs.timeBased()
-//		val company = some(Company::class.java).copy(id = companyId)
-//		template.cqlOperations.execute("insert into my_keyspace.company (id, name, address) values (?, ?, ?)", company.id, company.name, company.address.value)
-//		val result =template.cqlOperations.queryForList("select * from my_keyspace.company").first()
-//		assertEquals(company.id, result["id"])
-//	}
-//
-//}
+package com.orsh.cassandraspringbatch.repository
+
+import com.ocadotechnology.gembus.test.Arranger.some
+import com.orsh.cassandraspringbatch.abstractions.AbstractCassandraTest
+import com.orsh.cassandraspringbatch.entity.Company
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Test
+import org.springframework.beans.factory.annotation.Autowired
+import kotlin.test.assertEquals
+
+
+class CompanyRepositoryTest : AbstractCassandraTest() {
+	@Autowired
+	lateinit var companyRepository: CompanyRepository
+
+	@Test
+	fun saveTest() {
+		val company = some(Company::class.java)
+		val companyId = company.id
+		companyRepository.save(company)
+		val result = companyRepository.findById(companyId).get()
+		assertEquals(company.id, result.id)
+	}
+
+	@Test
+	fun updateTest() {
+		val company = some(Company::class.java)
+		val companyId = company.id
+		companyRepository.save(company)
+		val result = companyRepository.findById(companyId).get()
+		assertEquals(company.id, result.id)
+		assertEquals(company.name, result.name)
+
+		val updCompany = some(Company::class.java).copy(id = companyId)
+		companyRepository.save(updCompany)
+		val resultUpd = companyRepository.findById(companyId).get()
+		assertEquals(updCompany.id, resultUpd.id)
+		assertEquals(updCompany.name, resultUpd.name)
+		assertEquals(1, companyRepository.findAll().toList().size)
+	}
+
+	@AfterEach
+	fun cleanUp() {
+		companyRepository.deleteAll()
+	}
+}
